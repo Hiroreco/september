@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap");
+@import "tailwindcss";
+
+@layer base {
+    html {
+        font-family: "Comic Sans MS", cursive;
+    }
+}
+
+* {
+    @apply text-[#3b1c12];
+}
