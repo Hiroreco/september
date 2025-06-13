@@ -52,7 +52,7 @@ const App = () => {
                 <div className="text-xs opacity-70 mt-2">
                     Made by{" "}
                     <a
-                        href="https://www.youtube.com/@holoen_gigimurin"
+                        href="https://x.com/hiroavrs"
                         className="underline underline-offset-2"
                         target="_blank"
                         rel="noopener noreferrer"

@@ -1,5 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 
+const getRandomPosition = () => {
+    const x = Math.random() * 60 + 50;
+    const y = Math.random() * 60 + 50;
+    return { x, y };
+};
+
+const getRandomDirection = () => {
+    const dx = Math.random() < 0.5 ? 2 : -2;
+    const dy = Math.random() < 0.5 ? 2 : -2;
+    return { dx, dy };
+};
+
 interface GigiDVDProps {
     containerRef: React.RefObject<HTMLDivElement>;
 }
@@ -7,11 +19,11 @@ interface GigiDVDProps {
 const GigiDVD = ({ containerRef }: GigiDVDProps) => {
     const boxRef = useRef<HTMLImageElement>(null);
     const audioRef = useRef<HTMLAudioElement>(null);
-    const [position, setPosition] = useState({ x: 50, y: 50 });
+    const [position, setPosition] = useState(getRandomPosition());
     const [playing, setPlaying] = useState(false);
     const [boxSize, setBoxSize] = useState(200);
 
-    const directionRef = useRef({ dx: 2, dy: 2 });
+    const directionRef = useRef(getRandomDirection());
     const animationRef = useRef<number>();
 
     // Calculate box size based on viewport dimensions
