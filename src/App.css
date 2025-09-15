@@ -1,9 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap");
+@font-face {
+    font-family: "Comic Sans MS";
+    src: url("/fonts/ComicSansMS3.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 @import "tailwindcss";
 
 @layer base {
     html {
-        font-family: "Comic Sans MS", cursive;
+        font-family: "Comic Sans MS", cursive, sans-serif;
     }
 }
 
