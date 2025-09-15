@@ -26,24 +26,16 @@ export async function onRequest(context) {
     if (response.headers.get("content-type")?.includes("text/html")) {
         let html = await response.text();
 
-        // Replace the description meta tag
+        // Replace both description meta tags with more flexible regex
         html = html.replace(
-            /<meta name="description" content="[^"]*" \/>/,
-            `<meta name="description" content="${description}" />`
+            /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/gi,
+            `<meta name="description" content="${description}">`
         );
 
-        // Add/update og:description
-        if (html.includes('property="og:description"')) {
-            html = html.replace(
-                /<meta property="og:description" content="[^"]*" \/>/,
-                `<meta property="og:description" content="${description}" />`
-            );
-        } else {
-            html = html.replace(
-                /<meta property="og:image"/,
-                `<meta property="og:description" content="${description}" />\n        <meta property="og:image"`
-            );
-        }
+        html = html.replace(
+            /<meta\s+property="og:description"\s+content="[^"]*"\s*\/?>/gi,
+            `<meta property="og:description" content="${description}">`
+        );
 
         return new Response(html, {
             headers: response.headers,
