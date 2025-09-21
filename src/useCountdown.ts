@@ -1,11 +1,9 @@
-// filepath: countdown-timer/src/hooks/useCountdown.js
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const useCountdown = (targetDate) => {
+const useCountdown = (targetDate: Date) => {
     const calculateTimeLeft = () => {
         const now = new Date();
         const difference = targetDate.getTime() - now.getTime();
-        console.log(difference);
 
         let timeLeft: {
             days: number;
@@ -44,6 +42,13 @@ const useCountdown = (targetDate) => {
 
         return () => clearInterval(timer);
     }, [targetDate]);
+
+    return {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+    };
 
     return timeLeft;
 };

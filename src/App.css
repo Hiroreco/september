@@ -17,3 +17,22 @@
 * {
     @apply text-[#3b1c12];
 }
+
+@keyframes rainbow {
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}

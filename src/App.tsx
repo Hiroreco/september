@@ -1,24 +1,41 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import CelebrationEffects from "./CelebrationEffects";
 import CountdownTimer from "./CountdownTimer";
 import GigiDVD from "./GigiDVD";
 
 const App = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [celebrating, setCelebrating] = useState(false);
 
-    // Check if today is September 21st in USA (Eastern Time)
-    const today = new Date();
-    const usaDate = new Date(
-        today.toLocaleString("en-US", { timeZone: "America/New_York" })
-    );
-    const isSeptember21st =
-        usaDate.getMonth() === 8 && usaDate.getDate() === 21; // Month is 0-indexed
+    // Calculate target date in Eastern Time
+    const getTargetDate = () => {
+        const now = new Date();
+        const currentYear = now.getFullYear();
+
+        // Create target date for September 21st of current year in Eastern Time (USA/New_York)
+        let targetDate = new Date(`${currentYear}-09-21T00:00:00-04:00`);
+
+        // If we've already passed September 21st this year, target next year
+        if (now > targetDate) {
+            targetDate = new Date(`${currentYear + 1}-09-21T00:00:00-04:00`);
+        }
+
+        return targetDate;
+    };
+
+    const handleCountdownZero = () => {
+        setCelebrating(true);
+    };
 
     return (
         <div
             ref={containerRef}
-            className="flex flex-col items-center gap-2 bg-orange-200 justify-center h-screen w-screen"
+            className="flex flex-col items-center gap-2 bg-orange-200 justify-center h-screen w-screen relative overflow-hidden"
         >
-            {isSeptember21st ? (
+            {/* Celebration Effects */}
+            <CelebrationEffects active={celebrating} />
+
+            {celebrating ? (
                 // September 21st content
                 <>
                     <div className="text-lg z-10">Oh no, today is</div>
@@ -30,7 +47,7 @@ const App = () => {
                             Check what{" "}
                             <span className="font-semibold">she's</span> doing{" "}
                             <a
-                                href="https://www.youtube.com/@holoen_gigimurin"
+                                href="https://www.youtube.com/watch?v=gCGCoTeofkE"
                                 className="underline underline-offset-2"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -45,16 +62,8 @@ const App = () => {
                 <>
                     <div className="text-3xl z-10">There are</div>
                     <CountdownTimer
-                        targetDate={
-                            new Date(
-                                new Date().getMonth() >= 8 &&
-                                new Date().getDate() > 21
-                                    ? `${
-                                          new Date().getFullYear() + 1
-                                      }-09-21T00:00:00`
-                                    : `${new Date().getFullYear()}-09-21T00:00:00`
-                            )
-                        }
+                        targetDate={getTargetDate()}
+                        onZero={handleCountdownZero}
                     />
                     <div className="text-3xl z-10">to</div>
                     <div className="md:text-5xl text-3xl font-bold tracking-wide z-10">
@@ -97,6 +106,8 @@ const App = () => {
                     </div>
                 </>
             )}
+
+            {/* DVD Gigi - always present */}
             <GigiDVD containerRef={containerRef} />
         </div>
     );

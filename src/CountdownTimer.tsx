@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useCountdown from "./useCountdown";
 
 const CountdownItem = ({ value, label }: { value: number; label: string }) => (
@@ -8,16 +9,26 @@ const CountdownItem = ({ value, label }: { value: number; label: string }) => (
         </span>
     </div>
 );
-
 interface CountdownTimerProps {
     targetDate: Date;
+    onZero?: () => void;
 }
 
-const CountdownTimer = ({ targetDate }: CountdownTimerProps) => {
+const CountdownTimer = ({ targetDate, onZero }: CountdownTimerProps) => {
     const { days, hours, minutes, seconds } = useCountdown(targetDate);
-    console.log(
-        `Countdown to ${targetDate.toLocaleString()}: ${days} Days, ${hours} Hours, ${minutes} Minutes, ${seconds} Seconds`
-    );
+
+    useEffect(() => {
+        if (
+            days === 0 &&
+            hours === 0 &&
+            minutes === 0 &&
+            seconds === 0 &&
+            onZero
+        ) {
+            onZero();
+        }
+    }, [days, hours, minutes, seconds, onZero]);
+
     return (
         <div className="flex gap-2 items-center z-10">
             <CountdownItem value={days} label="Days" />
