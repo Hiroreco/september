@@ -43,13 +43,6 @@ const useCountdown = (targetDate: Date) => {
         return () => clearInterval(timer);
     }, [targetDate]);
 
-    return {
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-    };
-
     return timeLeft;
 };
 
