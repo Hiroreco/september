@@ -15,8 +15,8 @@ const App = () => {
         // Create target date for September 21st of current year in Eastern Time (USA/New_York)
         let targetDate = new Date(`${currentYear}-09-21T00:00:00-04:00`);
 
-        // If we've already passed September 21st this year, target next year
-        if (now > targetDate) {
+        // If we've already passed September 21st by one day, set target to next year
+        if (now > new Date(`${currentYear}-09-22T00:00:00-04:00`)) {
             targetDate = new Date(`${currentYear + 1}-09-21T00:00:00-04:00`);
         }
 
